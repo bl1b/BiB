@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Joketeller</string>
+    <string name="activity_joke_defaultjoke">Fun is over.</string>
+</resources>
