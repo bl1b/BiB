@@ -10,7 +10,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,6 +24,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // appcompat
     compile 'com.android.support:appcompat-v7:23.2.1'
 
     // Added for AdMob
@@ -32,5 +37,9 @@ dependencies {
     // android-library containing an activity to display the jokes
     compile project(':joketeller')
 
+    // gce endpoint used to pull jokes from the joke-provider
     compile project(path: ':backend-gce', configuration: 'android-endpoints')
+
+    // junit for testing purposes
+    androidTestCompile 'junit:junit:4.12'
 }
