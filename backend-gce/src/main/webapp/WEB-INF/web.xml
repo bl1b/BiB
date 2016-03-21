@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  * ****************************************************************************
+  ~  * Copyright (c) 2016 by Jan Grünewald.
+  ~  * jan.gruenewald84@googlemail.com
+  ~  * <p>
+  ~  * This file is part of 'Build it Bigger'. 'Build it Bigger' was developed as
+  ~  * part of the Android Developer Nanodegree by Udacity.
+  ~  * <p>
+  ~  * 'Build it Bigger' is free software: you can redistribute it and/or modify
+  ~  * it under the terms of the GNU General Public License as published by
+  ~  * the Free Software Foundation, either version 3 of the License, or
+  ~  * (at your option) any later version.
+  ~  * <p>
+  ~  * 'Build it Bigger' is distributed in the hope that it will be useful,
+  ~  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  * GNU General Public License for more details.
+  ~  * <p>
+  ~  * You should have received a copy of the GNU General Public License
+  ~  * along with 'Build it Bigger'.  If not, see <http://www.gnu.org/licenses/>.
+  ~  * ****************************************************************************
+  ~  */
+  -->
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+   <servlet>
+        <servlet-name>SystemServiceServlet</servlet-name>
+        <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+        <init-param>
+            <param-name>services</param-name>
+            <param-value>com.udacity.gradle.builditbigger.gce.backend.JokeApi</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SystemServiceServlet</servlet-name>
+        <url-pattern>/_ah/spi/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>
