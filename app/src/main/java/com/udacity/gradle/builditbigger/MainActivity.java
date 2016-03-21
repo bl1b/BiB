@@ -11,14 +11,11 @@ import com.udacity.gradle.builditbigger.joketeller.JokeActivity;
 
 
 public class MainActivity extends AppCompatActivity {
-    private PullJokeTask pullJokeTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        pullJokeTask = new PullJokeTask();
     }
 
 
@@ -48,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
         // old
 //        Toast.makeText(this, JokelibFactory.getInstance().provideJokeProvider().provideRandomJoke(), Toast.LENGTH_LONG).show();
         // new: use pull joke task and kick off intent
-        if (pullJokeTask != null) {
-            pullJokeTask.execute(this);
-        }
+        new PullJokeTask().execute(this);
     }
 
     public void launchJokeIntent(String jokeText) {
