@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,17 @@ import com.udacity.gradle.builditbigger.joketeller.JokeActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage(getString(R.string.progress_message));
+        dialog.setCancelable(false);
     }
 
 
@@ -45,12 +53,18 @@ public class MainActivity extends AppCompatActivity {
         // old
 //        Toast.makeText(this, JokelibFactory.getInstance().provideJokeProvider().provideRandomJoke(), Toast.LENGTH_LONG).show();
         // new: use pull joke task and kick off intent
+        dialog.show();
         new PullJokeTask().execute(this);
     }
 
     public void launchJokeIntent(String jokeText) {
-        Intent jokeIntent = new Intent(getApplicationContext(), JokeActivity.class);
-        jokeIntent.putExtra(JokeActivity.EXTRA_JOKE, jokeText);
-        startActivity(jokeIntent);
+        dialog.dismiss();
+
+        // only show joke-intent when there is a joke to tell
+        if (jokeText != null && !jokeText.isEmpty()) {
+            Intent jokeIntent = new Intent(getApplicationContext(), JokeActivity.class);
+            jokeIntent.putExtra(JokeActivity.EXTRA_JOKE, jokeText);
+            startActivity(jokeIntent);
+        }
     }
 }

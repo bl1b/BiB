@@ -1,5 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +17,19 @@ import com.udacity.gradle.builditbigger.joketeller.JokeActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    InterstitialAd interstitialAd;
+    private ProgressDialog dialog;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage(getString(R.string.progress_message));
+        dialog.setCancelable(false);
+
         final Context me = this;
 
         // Ad-related stuff (only applies on MainActivity of "free"-flavor)
@@ -30,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
+                dialog.show();
                 new PullJokeTask().execute(me);
             }
         });
@@ -68,14 +77,20 @@ public class MainActivity extends AppCompatActivity {
         if (interstitialAd != null && interstitialAd.isLoaded()) {
             interstitialAd.show();
         } else {
+            dialog.show();
             new PullJokeTask().execute(this);
         }
     }
 
     public void launchJokeIntent(String jokeText) {
-        Intent jokeIntent = new Intent(getApplicationContext(), JokeActivity.class);
-        jokeIntent.putExtra(JokeActivity.EXTRA_JOKE, jokeText);
-        startActivity(jokeIntent);
+        dialog.dismiss();
+        // only show joke-intent when there is a joke to tell
+
+        if (jokeText != null && !jokeText.isEmpty()) {
+            Intent jokeIntent = new Intent(getApplicationContext(), JokeActivity.class);
+            jokeIntent.putExtra(JokeActivity.EXTRA_JOKE, jokeText);
+            startActivity(jokeIntent);
+        }
     }
 
     private void requestNewInterstitial() {
