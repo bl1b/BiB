@@ -33,9 +33,13 @@ dependencies {
 
 appengine {
     downloadSdk = true
+    // used for my testing purposes: domain policies will restrict access if http address is not set
+    // httpAddress = '0.0.0.0'
+
     appcfg {
         oauth2 = true
     }
+
     endpoints {
         getClientLibsOnBuild = true
         getDiscoveryDocsOnBuild = true
