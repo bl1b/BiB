@@ -4,4 +4,10 @@
     <string name="button_text">Tell Joke</string>
     <string name="action_settings">Settings</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!--Configuration used by me because of domain policies-->
+    <!--<string name="gce_api_uri">http://10.24.0.27:8080/_ah/api/</string>-->
+
+    <!--Configuration from the example code-->
+    <string name="gce_api_uri">http://10.0.2.2:8080/_ah/api/</string>
 </resources>

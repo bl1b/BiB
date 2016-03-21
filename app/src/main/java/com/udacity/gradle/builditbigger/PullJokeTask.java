@@ -91,15 +91,17 @@ public class PullJokeTask extends AsyncTask<Context, Void, String> {
      * This is a helper method to ensure that the server apiservice (gce-backend) is initialized.
      */
     private void ensureApiServiceInitialized() {
-        if (jokeApiService == null) {
+        if (jokeApiService == null && context != null) {
+            String myApiUri = context.getString(R.string.gce_api_uri);
             JokeApi.Builder myBuilder = new JokeApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                    .setRootUrl("http://10.24.0.27:8080/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
-                    });
+                    })
+                    .setApplicationName("jokeApi");
 
             jokeApiService = myBuilder.build();
         }
