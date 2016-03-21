@@ -6,16 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.udacity.gradle.builditbigger.jokelib.JokelibFactory;
+
 import com.udacity.gradle.builditbigger.joketeller.JokeActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+    private PullJokeTask pullJokeTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pullJokeTask = new PullJokeTask();
     }
 
 
@@ -44,12 +47,15 @@ public class MainActivity extends AppCompatActivity {
     public void tellJoke(View view) {
         // old
 //        Toast.makeText(this, JokelibFactory.getInstance().provideJokeProvider().provideRandomJoke(), Toast.LENGTH_LONG).show();
-        // new: use intent
-
-        Intent jokeIntent = new Intent(getApplicationContext(), JokeActivity.class);
-        jokeIntent.putExtra(JokeActivity.EXTRA_JOKE, JokelibFactory.getInstance().provideJokeProvider().provideRandomJoke());
-        startActivity(jokeIntent);
+        // new: use pull joke task and kick off intent
+        if (pullJokeTask != null) {
+            pullJokeTask.execute(this);
+        }
     }
 
-
+    public void launchJokeIntent(String jokeText) {
+        Intent jokeIntent = new Intent(getApplicationContext(), JokeActivity.class);
+        jokeIntent.putExtra(JokeActivity.EXTRA_JOKE, jokeText);
+        startActivity(jokeIntent);
+    }
 }

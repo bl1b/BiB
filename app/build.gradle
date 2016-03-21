@@ -32,6 +32,5 @@ dependencies {
     // android-library containing an activity to display the jokes
     compile project(':joketeller')
 
-
     compile project(path: ':backend-gce', configuration: 'android-endpoints')
 }
