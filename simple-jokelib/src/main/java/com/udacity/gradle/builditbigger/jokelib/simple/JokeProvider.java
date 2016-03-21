@@ -14,6 +14,7 @@
 package com.udacity.gradle.builditbigger.jokelib.simple;
 
 import com.udacity.gradle.builditbigger.jokelib.JokelibFactory;
+import com.udacity.gradle.builditbigger.jokelib.simple.model.Joke;
 
 import java.util.Random;
 
@@ -36,12 +37,13 @@ public class JokeProvider {
         jokeSource = JokelibFactory.getInstance().provideJokeSource();
     }
 
-    public String provideRandomJoke() {
-        String myRandomJoke = null;
+    public Joke provideRandomJoke() {
+        Joke myRandomJoke = null;
 
         if (jokeSource != null) {
+            myRandomJoke = new Joke();
             Random myRand = new Random();
-            myRandomJoke = jokeSource.getJokeAtIndex(myRand.nextInt(jokeSource.getNumberOfJokes()));
+            myRandomJoke.setText(jokeSource.getJokeAtIndex(myRand.nextInt(jokeSource.getNumberOfJokes() - 1)));
         }
 
         return myRandomJoke;
