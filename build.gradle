@@ -40,9 +40,9 @@ task gceInBackground {
             gceStartWrapper.execute()
         }
 
-        // sleep for 10 seconds to make sure that the server has been
+        // sleep for 15 seconds to make sure that the server has been
         // setup before executing further tasks
-        sleep 10000
+        sleep 15000
     }
 }
 
