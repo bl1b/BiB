@@ -20,7 +20,7 @@
  *  * You should have received a copy of the GNU General Public License
  *  * along with 'Build it Bigger'.  If not, see <http://www.gnu.org/licenses/>.
  *  * ****************************************************************************
- *  
+ *
  */
 
 package com.udacity.gradle.builditbigger;
@@ -94,7 +94,7 @@ public class PullJokeTask extends AsyncTask<Context, Void, String> {
         if (jokeApiService == null && context != null) {
             String myApiUri = context.getString(R.string.gce_api_uri);
             JokeApi.Builder myBuilder = new JokeApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                    .setRootUrl("http://10.24.0.27:8080/_ah/api/")
+                    .setRootUrl(context.getString(R.string.gce_api_uri))
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
