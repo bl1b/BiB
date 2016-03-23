@@ -17,3 +17,36 @@ allprojects {
         jcenter()
     }
 }
+
+task allConnectedChecksWithGCE {
+    group = "customtasks"
+    description = "Starts GCE-Backend before executing every connected check. Finally shuts down the GCE-Backend."
+
+    def dependencies = [':gceInBackground']
+    getTasksByName('connectedCheck', true).each {
+        dependencies.add(it.getPath())
+        it.mustRunAfter ':gceInBackground'
+    }
+
+    dependsOn dependencies
+    finalizedBy ':backend-gce:appengineStop'
+}
+
+task gceInBackground {
+    doLast {
+        // executes the gce-wrapper on a separate thread so it does not
+        // block the execution of other tasks
+        def myThread = Thread.start {
+            gceStartWrapper.execute()
+        }
+
+        // sleep for 10 seconds to make sure that the server has been
+        // setup before executing further tasks
+        sleep 10000
+    }
+}
+
+task gceStartWrapper(type: Exec) {
+    workingDir '.'
+    commandLine = ['cmd', '/c', 'gradle' , ':backend-gce:appengineRun']
+}
